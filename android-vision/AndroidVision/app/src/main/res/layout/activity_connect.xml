@@ -1,0 +1,50 @@
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="2pt"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    tools:context=".ConnectActivity"
+    android:background="@drawable/background">
+
+    <ImageView
+        android:layout_width="50pt"
+        android:layout_height="40pt"
+        android:src="@drawable/logo_cgroup"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="20dp"
+        android:id="@+id/imageView4" />
+
+
+    <Button
+        android:gravity="center"
+        android:layout_width="100pt"
+        android:layout_height="35pt"
+        android:background="@drawable/connect"
+        android:onClick="connect"
+        android:id="@+id/button4"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:id="@+id/cancel_button"
+        android:layout_width="20pt"
+        android:layout_height="20pt"
+        android:background="@drawable/xbutton"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:onClick="quit"
+        android:layout_margin="8pt"/>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="100pt"
+        android:src="@drawable/title"
+        android:layout_alignTop="@+id/imageView4"
+        android:layout_alignStart="@+id/imageView4"
+        android:layout_marginStart="64dp" />
+
+</RelativeLayout>

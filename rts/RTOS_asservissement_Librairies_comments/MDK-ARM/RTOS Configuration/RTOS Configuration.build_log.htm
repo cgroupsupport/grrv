@@ -1,0 +1,116 @@
+<html>
+<body>
+<pre>
+<h1>µVision Build Log</h1>
+<h2>Tool Versions:</h2>
+IDE-Version: µVision V5.16a
+Copyright (C) 2015 ARM Ltd and ARM Germany GmbH. All rights reserved.
+License Information: dfsf gfdg, dsfdf, LIC=----
+ 
+Tool Versions:
+Toolchain:       MDK-Lite  Version: 5.16a
+Toolchain Path:  C:\Keil_v5\ARM\ARMCC\Bin
+C Compiler:      Armcc.exe V5.06 (build 20)
+Assembler:       Armasm.exe V5.06 (build 20)
+Linker/Locator:  ArmLink.exe V5.06 (build 20)
+Library Manager: ArmAr.exe V5.06 (build 20)
+Hex Converter:   FromElf.exe V5.06 (build 20)
+CPU DLL:         SARMCM3.DLL V5.16a
+Dialog DLL:      DCM.DLL V1.13.2.0
+Target DLL:      STLink\ST-LINKIII-KEIL_SWO.dll V2.0.17.0
+Dialog DLL:      TCM.DLL V1.14.5.0
+ 
+<h2>Project:</h2>
+C:\Users\flavien\Desktop\RTOS_Librairies_comments\MDK-ARM\RTOS.uvprojx
+Project File Date:  10/04/2015
+
+<h2>Output:</h2>
+*** Using Compiler 'V5.06 (build 20)', folder: 'C:\Keil_v5\ARM\ARMCC\Bin'
+Build target 'RTOS Configuration'
+compiling main.c...
+compiling i2c_slave_cgroup.c...
+compiling stm32f4xx_it.c...
+..\Src\stm32f4xx_it.c(54): warning:  #177-D: function "SysTick_Handler" was declared but never referenced
+  void SysTick_Handler(void)
+..\Src\stm32f4xx_it.c: 1 warning, 0 errors
+compiling thread.c...
+..\Src\thread.c(209): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+  			prop_pls = (int)(*Commande1/3.52*255+0.5);
+..\Src\thread.c(234): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+      *y_star2=1.658*(*y_star1)-0.6771*(*y_star0)+0.03502*(gain*(*I_mes[1]))+0.02701*(gain*(*I_mes[0])); // Filtre adoucissement I_mes<->I_capteur
+..\Src\thread.c(234): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+      *y_star2=1.658*(*y_star1)-0.6771*(*y_star0)+0.03502*(gain*(*I_mes[1]))+0.02701*(gain*(*I_mes[0])); // Filtre adoucissement I_mes<->I_capteur
+..\Src\thread.c(234): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+      *y_star2=1.658*(*y_star1)-0.6771*(*y_star0)+0.03502*(gain*(*I_mes[1]))+0.02701*(gain*(*I_mes[0])); // Filtre adoucissement I_mes<->I_capteur
+..\Src\thread.c(234): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+      *y_star2=1.658*(*y_star1)-0.6771*(*y_star0)+0.03502*(gain*(*I_mes[1]))+0.02701*(gain*(*I_mes[0])); // Filtre adoucissement I_mes<->I_capteur
+..\Src\thread.c(237): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+      *Commande1=*Commande0+3.7107*(gain*(*I_mes[2]))-1.6746*(gain*(*I_mes[1]))+2.3081*(*y_star2)-0.2805*(*y_star1)+0.0085*(*y_star0);
+..\Src\thread.c(237): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+      *Commande1=*Commande0+3.7107*(gain*(*I_mes[2]))-1.6746*(gain*(*I_mes[1]))+2.3081*(*y_star2)-0.2805*(*y_star1)+0.0085*(*y_star0);
+..\Src\thread.c(237): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+      *Commande1=*Commande0+3.7107*(gain*(*I_mes[2]))-1.6746*(gain*(*I_mes[1]))+2.3081*(*y_star2)-0.2805*(*y_star1)+0.0085*(*y_star0);
+..\Src\thread.c(237): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+      *Commande1=*Commande0+3.7107*(gain*(*I_mes[2]))-1.6746*(gain*(*I_mes[1]))+2.3081*(*y_star2)-0.2805*(*y_star1)+0.0085*(*y_star0);
+..\Src\thread.c(237): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+      *Commande1=*Commande0+3.7107*(gain*(*I_mes[2]))-1.6746*(gain*(*I_mes[1]))+2.3081*(*y_star2)-0.2805*(*y_star1)+0.0085*(*y_star0);
+..\Src\thread.c(240): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+  	if(*Commande1>
+max) *Commande1=Umax;
+..\Src\thread.c: 11 warnings, 0 errors
+linking...
+Program Size: Code=17160 RO-data=1624 RW-data=152 ZI-data=8280  
+"RTOS Configuration\RTOS Configuration.axf" - 0 Error(s), 12 Warning(s).
+
+<h2>Software Packages used:</h2>
+
+Package Vendor: ARM
+                http://www.keil.com/pack/ARM.CMSIS.4.4.0.pack
+                ::CMSIS:RTOS:1.0 (API)
+                CMSIS (Cortex Microcontroller Software Interface Standard)
+   * Component: RTOS Version: 1.0
+   * Component: CORE Version: 4.2.0
+   * Component: Keil RTX Version: 4.79.0
+
+Package Vendor: Keil
+                http://www.keil.com/pack/Keil.STM32F4xx_DFP.2.5.0.pack
+                Keil::Device:Startup:2.3.1
+                STMicroelectronics STM32F4 Series Device Support, Drivers and Examples
+   * Component: Startup Version: 2.3.1
+
+<h2>Collection of Component include folders:</h2>
+  C:\Users\flavien\Desktop\RTOS_Librairies_comments\MDK-ARM\RTE
+  C:\Keil_v5\ARM\PACK\ARM\CMSIS\4.4.0\CMSIS\Include
+  C:\Keil_v5\ARM\PACK\ARM\CMSIS\4.4.0\CMSIS\RTOS\RTX\INC
+  C:\Keil_v5\ARM\PACK\Keil\STM32F4xx_DFP\2.5.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include
+
+<h2>Collection of Component Files used:</h2>
+
+   * Component: ::CMSIS:RTOS:1.0 (API)
+
+   * Component: ARM::CMSIS:CORE:4.2.0
+
+   * Component: ARM::CMSIS:RTOS:Keil RTX:4.79.0
+      Source file:   CMSIS\RTOS\RTX\UserCodeTemplates\MemPool.c
+      Include file:  CMSIS\RTOS\RTX\INC\cmsis_os.h
+      Source file:   CMSIS\RTOS\RTX\Templates\RTX_Conf_CM.c
+      Include file:  CMSIS\RTOS\RTX\UserCodeTemplates\osObjects.h
+      Source file:   CMSIS\RTOS\RTX\UserCodeTemplates\MailQueue.c
+      Source file:   CMSIS\RTOS\RTX\UserCodeTemplates\Thread.c
+      Source file:   CMSIS\RTOS\RTX\SRC\ARM\SVC_Table.s
+      Source file:   CMSIS\RTOS\RTX\UserCodeTemplates\Mutex.c
+      Library file:  CMSIS\RTOS\RTX\LIB\ARM\RTX_CM4.lib
+      Source file:   CMSIS\RTOS\RTX\UserCodeTemplates\main.c
+      Source file:   CMSIS\RTOS\RTX\UserCodeTemplates\MsgQueue.c
+      Source file:   CMSIS\RTOS\RTX\UserCodeTemplates\Semaphore.c
+      Source file:   CMSIS\RTOS\RTX\UserCodeTemplates\Timer.c
+
+   * Component: Keil::Device:Startup:2.3.1
+      Include file:  Drivers\CMSIS\Device\ST\STM32F4xx\Include\stm32f4xx.h
+      Source file:   MDK\Device\Source\ARM\STM32F4xx_OTP.s
+      Source file:   Drivers\CMSIS\Device\ST\STM32F4xx\Source\Templates\arm\startup_stm32f411xe.s
+      Source file:   MDK\Device\Source\ARM\system_stm32f4xx.c
+Build Time Elapsed:  00:00:02
+</pre>
+</body>
+</html>

@@ -1,0 +1,26 @@
+#!/bin/sh -e
+#
+# rc.local
+#
+# This script is executed at the end of each multiuser runlevel.
+# Make sure that the script will "exit 0" on success or any other
+# value on error.
+#
+# In order to enable or disable this script just change the execution
+# bits.
+#
+# By default this script does nothing.
+
+# Print the IP address
+_IP=$(hostname -I) || true
+if [ "$_IP" ]; then
+  printf "My IP address is %s\n" "$_IP"
+fi
+
+sudo ifconfig wlan0 10.0.0.1
+
+sudo /home/pi/build/gst-rtsp-server/examples/test-launch "( rpicamsrc bitrate=2000000 hflip=false vflip=false ! video/x-h264,width=1280,height=720,framerate=12/1,profile=baseline ! h264parse ! rtph264pay config-interval=5 pt=96 name=pay0 )" &
+
+sudo /home/pi/build/rasp_control &
+sudo /home/pi/build/rasp_vision &
+exit 0

@@ -1,0 +1,10 @@
+digraph "i2c_slave" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_8110339cd73e1a6c38acced3a8aaa629 {
+    graph [ bgcolor="#eeeeff", pencolor="black", label="" URL="dir_8110339cd73e1a6c38acced3a8aaa629.html"];
+    dir_8110339cd73e1a6c38acced3a8aaa629 [shape=plaintext label="i2c_slave"];
+    dir_86efd1cf7161470dfc6a07a88e47590e [shape=box label="doxy" color="black" fillcolor="white" style="filled" URL="dir_86efd1cf7161470dfc6a07a88e47590e.html"];
+  }
+}

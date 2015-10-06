@@ -1,0 +1,9 @@
+digraph "i2c_slave/doxy" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_8110339cd73e1a6c38acced3a8aaa629 {
+    graph [ bgcolor="#ddddee", pencolor="black", label="i2c_slave" fontname="Helvetica", fontsize="10", URL="dir_8110339cd73e1a6c38acced3a8aaa629.html"]
+  dir_86efd1cf7161470dfc6a07a88e47590e [shape=box, label="doxy", style="filled", fillcolor="#eeeeff", pencolor="black", URL="dir_86efd1cf7161470dfc6a07a88e47590e.html"];
+  }
+}

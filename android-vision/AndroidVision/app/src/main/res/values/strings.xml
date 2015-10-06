@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">C Vision</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="connect">Connect</string>
+    <string name="title">Ground\nReconnaissance\nRemote\nVehicle</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_standard_control">StandardControlActivity</string>
+    <string name="title_activity_myo_control">MyoControlActivity</string>
+    <string name="title_activity_video">VideoActivity</string>
+</resources>
