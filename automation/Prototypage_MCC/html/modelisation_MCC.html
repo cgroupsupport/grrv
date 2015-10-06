@@ -1,0 +1,624 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>modelisation_MCC</title><meta name="generator" content="MATLAB 8.5"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2015-09-28"><meta name="DC.source" content="modelisation_MCC.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h2>Contents</h2><div><ul><li><a href="#2">Estimation du syst?me :</a></li><li><a href="#3">determination de la gamme en tension de pilotage du MCC</a></li><li><a href="#4">Calcul des parametres du systeme</a></li><li><a href="#5">Gain statique</a></li><li><a href="#6">Constante de temps</a></li><li><a href="#7">Modele du systeme:</a></li><li><a href="#8">Continu:</a></li><li><a href="#9">fonction de transfert en Continu:</a></li><li><a href="#10">fonction de transfert en Discret:</a></li><li><a href="#11">Mise en place du r&eacute;gulateur</a></li><li><a href="#12">Modelisation de pertubation</a></li><li><a href="#13">Initialisation R,S,T</a></li><li><a href="#14">Filtre d'adoucissement</a></li><li><a href="#15">Fonctions de sensibilite</a></li><li><a href="#16">Definition des Fonctions de transfert</a></li><li><a href="#17">Etude du comportement du systeme</a></li><li><a href="#18">Stabilite</a></li><li><a href="#19">SIMULATION DU SYSTEME SUR SIMULINK :</a></li><li><a href="#20">reponse du systeme en BF a un echelon amorti par un second ordre:</a></li></ul></div><pre class="codeinput"><span class="comment">%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%</span>
+<span class="comment">% Modelisation du Moteur de propulsion equivalent a un moteur courant continu (MCC)%</span>
+<span class="comment">%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%</span>
+clear <span class="string">all</span>;
+close <span class="string">all</span>;
+</pre><h2>Estimation du syst?me :<a name="2"></a></h2><pre class="codeinput"><span class="comment">% Le MCC etant assimilable ? un systeme du premier ordre nous pouvons dire</span>
+<span class="comment">% que le systeme en continu peut s'ecrire comme suit :</span>
+
+        <span class="comment">%%%%%%%%%%%%%%%%%%%%%%%</span>
+        <span class="comment">%             k       %</span>
+        <span class="comment">% G(p) = ------------ %</span>
+        <span class="comment">%       1 + Tau * p   %</span>
+        <span class="comment">%%%%%%%%%%%%%%%%%%%%%%%</span>
+
+<span class="comment">% Nous avons de ce fait effectue un calcul des parametres</span>
+<span class="comment">% experimentalement.</span>
+</pre><h2>determination de la gamme en tension de pilotage du MCC<a name="3"></a></h2><pre class="codeinput"><span class="comment">% Ps: les testes ont ete faits sur chacune des roues. Nous avons presente</span>
+<span class="comment">% que ceux d'un des roues. On precise que les resultats ne sont pas</span>
+<span class="comment">% identiques sur chaque roue.</span>
+
+<span class="comment">% La demarche est simple, il suffit de mesurer d'abord la tension nominale</span>
+<span class="comment">% qui est la tension minimale a partir de laquelle les roues commencent ?</span>
+<span class="comment">% tourner a vide. Nous avons mesur? 0.15 V pour les tension positives et 0.33V</span>
+<span class="comment">% pour les tensions negatives. de ce fait sur cet intervalle en tension</span>
+<span class="comment">% [-0.33V 0.15V] le moteur ne tourne pas meme s'il l'administrateur envoie une</span>
+<span class="comment">% consigne.</span>
+
+<span class="comment">% Nous avons ensuite envoye des consignes en tension continue allant de 1V</span>
+<span class="comment">% a 5V et a l'aide d'un tachym?tre, nous avons visualise la caracteristique</span>
+<span class="comment">% du systeme qui est la m?me pour les tensions negatives. Nous avons la courbe suivante:</span>
+
+Te=0.03;
+
+Tension = [0.01,0.03,0.05,0.07,0.09,0.1,0.14,1,2,3,4,5];
+vitesse = [0,0,0,0,0,0,0,240,665,1140,1622,2060];
+figure(1)
+plot(Tension,vitesse)
+title(<span class="string">'caracteristique du MCC'</span>)
+xlabel(<span class="string">'tension en V'</span>)
+ylabel(<span class="string">'vitesse en tour/min'</span>)
+
+<span class="comment">% Nous avons vu que le systeme est lineaire sur sa zone de</span>
+<span class="comment">% fonctionnement. Nous avons donc choisi comme gamme de pilotage du moteur</span>
+<span class="comment">% la gamme suivante :[1V 6V] pour eviter que le systeme focntionnement en saturation.</span>
+
+<span class="comment">% Le courant nominal a ete mesur? a : 3,3V. Il ne faudra pas depasser cette</span>
+<span class="comment">% tension si on veut eviter un surchauffement du moteur.</span>
+</pre><img vspace="5" hspace="5" src="modelisation_MCC_01.png" alt=""> <h2>Calcul des parametres du systeme<a name="4"></a></h2><h2>Gain statique<a name="5"></a></h2><p>Nous somme partis de la courbe caracterisque du systeme en calculant le coefficient de proportionnalite entre la vitesse et le courant. Ce coefficient correspond au gain statique K du systeme m&eacute;canique,il vaut Km=478. Mais &eacute;tant donn&eacute;e que notre retour est en courant nous avons jug&eacute; plus int&eacute;ressant de travailler sur le retour &eacute;lectrique au lieu du retour m&eacute;canique qui est donn&eacute;e ci-dessous.</p><pre class="codeinput">K = 1.6996;
+</pre><h2>Constante de temps<a name="6"></a></h2><pre class="codeinput"><span class="comment">% la constante de temps est trouve a l'aide du nucleo en envoyant une</span>
+<span class="comment">% consigne en echelon et en faisant une acquisition en courant a travers</span>
+<span class="comment">% l'uart du nucleo. Apr&egrave;s, les mesures relevees ont permis le tra&ccedil;&eacute; d'une</span>
+<span class="comment">% courbe qui a permis de trouver la constante m&eacute;canique( le syst&egrave;me est</span>
+<span class="comment">% &eacute;quivalent &agrave; un premier ordre avec un gain &eacute;lectrique et une constante de</span>
+<span class="comment">% tamps m&eacute;canique puisque la constante de temps electrique est</span>
+<span class="comment">% n&eacute;gligeable) et le gain &eacute;lectrique.</span>
+
+tau = 0.095;
+</pre><h2>Modele du systeme:<a name="7"></a></h2><h2>Continu:<a name="8"></a></h2><h2>fonction de transfert en Continu:<a name="9"></a></h2><pre class="codeinput">Bcon = K;
+Acon = [tau 1];
+Gcon = tf(Bcon,Acon)
+
+<span class="comment">% Stabilite du systeme:</span>
+
+figure(2)
+ pzmap(Gcon);
+
+<span class="comment">% le systeme est clairement stable car il presente un seul pole -10.63 qui</span>
+<span class="comment">% est dans le domaine de stabilite.</span>
+</pre><pre class="codeoutput">
+Gcon =
+ 
+      1.7
+  -----------
+  0.095 s + 1
+ 
+Continuous-time transfer function.
+
+</pre><img vspace="5" hspace="5" src="modelisation_MCC_02.png" alt=""> <h2>fonction de transfert en Discret:<a name="10"></a></h2><pre class="codeinput">Gd=c2d(Gcon,Te);
+
+Gd.variable=<span class="string">'z^-1'</span>
+
+Bd=Gd.num{:};
+
+Ad=Gd.den{:};
+</pre><pre class="codeoutput">
+Gd =
+ 
+    0.4602 z^-1
+  ---------------
+  1 - 0.7292 z^-1
+ 
+Sample time: 0.03 seconds
+Discrete-time transfer function.
+
+</pre><h2>Mise en place du r&eacute;gulateur<a name="11"></a></h2><h2>Modelisation de pertubation<a name="12"></a></h2><pre class="codeinput">E=Bd;
+C=1;
+D=[1,-1];
+
+ksi=1.3
+wo=5
+
+<span class="comment">% Pc=tf(1,[1,2*ksi*wo,wo*wo]);</span>
+<span class="comment">% Pd=c2d(Pc,Te);</span>
+<span class="comment">% D2=Pd.den{:};</span>
+</pre><pre class="codeoutput">
+ksi =
+
+    1.3000
+
+
+wo =
+
+     5
+
+</pre><h2>Initialisation R,S,T<a name="13"></a></h2><pre class="codeinput">ret=1;
+Dc=1;
+Dr=D;
+P=conv([1,-roots(Ad)/12],[1,-roots(Ad)/12]);
+
+<span class="comment">% Le choix de ces p&ocirc;les influencent sur les marges de stabilit&eacute; du syst&egrave;me.</span>
+<span class="comment">% En effet, plus les p&ocirc;les sont rapides plus nos marges de gain et de phase</span>
+<span class="comment">% sont r&eacute;duites. Notons toutefois que ce choix des p&ocirc;les doit &ecirc;tre tel</span>
+<span class="comment">% qu'ils restent inf&eacute;rieur au p&ocirc;le du syst&egrave;me( p&ocirc;le de Ad ).</span>
+
+
+Rd1=conv(Ad,Dr);
+
+[S,R]=BEZOU_Z(Rd1,Bd(2),ret,P);
+
+<span class="comment">% Polynomes R,S,T</span>
+
+Rd=conv(S,Dr) ;
+Rn=(conv(R,Dc))';
+T=(1/sum(Bd))*P ;
+
+FTRz=tf(Rd,Rn,Te,<span class="string">'Variable'</span>,<span class="string">'z^-1'</span>);
+
+<span class="comment">% Fonction de transfert perturbation</span>
+
+Gp=tf(conv(E,Rn),T,Te,<span class="string">'variable'</span>,<span class="string">'z^-1'</span>)
+
+Kp= 1/dcgain(Gp);
+</pre><pre class="codeoutput">
+Gp =
+ 
+       1.608 z^-1 - 0.7255 z^-2
+  -----------------------------------
+  2.173 - 0.2641 z^-1 + 0.008024 z^-2
+ 
+Sample time: 0.03 seconds
+Discrete-time transfer function.
+
+</pre><h2>Filtre d'adoucissement<a name="14"></a></h2><pre class="codeinput"><span class="comment">% Ce filtre a pour but de ramener la pente infinie de l'echelon en consigne</span>
+<span class="comment">% a une pente de valeur finie. Il a donc pour role d'adoucir la consigne</span>
+<span class="comment">% quand cette derniere est trop brutale.</span>
+
+<span class="comment">% Implementation du Filtre</span>
+
+ksi=1.3
+wo=10
+
+Fc=tf(1,[1,2*ksi*wo,wo*wo]);
+Fd=c2d(Fc,Te);
+Kf=1/dcgain(Fd);
+</pre><pre class="codeoutput">
+ksi =
+
+    1.3000
+
+
+wo =
+
+    10
+
+</pre><h2>Fonctions de sensibilite<a name="15"></a></h2><h2>Definition des Fonctions de transfert<a name="16"></a></h2><pre class="codeinput">Sz= tf(conv(Ad,Rd),P,Te,<span class="string">'Variable'</span>,<span class="string">'z^-1'</span>); <span class="comment">% Fonction de sensibilite discrete</span>
+Sc=d2c(Sz)  ;   <span class="comment">% Fonction de sensibilit&eacute; continue</span>
+
+Tz=tf(conv(Bd,Rn),P,Te,<span class="string">'Variable'</span>,<span class="string">'z^-1'</span>);  <span class="comment">% Fonction de sensibilite compl&eacute;mentaire discrete</span>
+Tc=d2c(Tz);  <span class="comment">% Fonction de sensibilite complementaire continue</span>
+
+GSz=tf(conv(Bd(2),Rd),P,Te,<span class="string">'Variable'</span>,<span class="string">'z^-1'</span>); <span class="comment">% FT entre perturbations d'entree et sortie du systeme</span>
+GSc=d2c(GSz); <span class="comment">% FT entre perturbations d'entree et sortie du systeme en continue</span>
+
+RSz=minreal(FTRz*Sz); <span class="comment">% FT entre perturbations de sortie et l'entree du systeme</span>
+RSc=d2c(RSz)   <span class="comment">% FT entre perturbations de sortie et l'entree du systeme en continue</span>
+</pre><pre class="codeoutput">
+RSc =
+ 
+  0.2863 s^3 - 199 s^2 - 4201 s - 1.792e-10
+  -----------------------------------------
+   s^3 + 213.2 s^2 + 1.367e04 s + 2.312e05
+ 
+Continuous-time transfer function.
+
+</pre><h2>Etude du comportement du systeme<a name="17"></a></h2><h2>Stabilite<a name="18"></a></h2><pre class="codeinput"><span class="comment">% Fonction de tranfert en boucle ouverte</span>
+
+Gboc = minreal((1-Sc)/Sc);
+
+
+ figure(3);
+ nichols(Gboc);
+ grid;
+ legend(<span class="string">'Diagramme de nichols de la BO'</span>);
+
+<span class="comment">% Du diagramme de nichols on peut deduire les differentes marges de</span>
+<span class="comment">% stabilite:</span>
+<span class="comment">% Marge de Gain = 4.52 dB C [4,6] dB , Marge de Phase = 50.7 degres C [30,60] deg ,</span>
+<span class="comment">% Marge de Retard = 2.39*10^(-3) s.</span>
+<span class="comment">%</span>
+<span class="comment">% Pour la marge de module nous regardons le gain minimal avant la fr&eacute;quence</span>
+<span class="comment">% de coupure de la fonction de transfert 1 + Gboc ce qui nous donne une</span>
+<span class="comment">% marge de module de -3.85 dB. Cette valur n'appartient pas &agrave; la plage</span>
+<span class="comment">% recommandee [-8,-6] dB , mais differentes manipulations des poles du polyn&ocirc;me P</span>
+<span class="comment">% nous ont montre que pour atteindre cette plage, nous risquons de sortir</span>
+<span class="comment">% des plages de gain et de phase recommandees alors nous avons garde une</span>
+<span class="comment">% configuration qui satisfait le maximum de recommendations.</span>
+
+
+figure(4);
+
+bode(Sc);
+title(<span class="string">'Bode fonction de sensibilit&eacute; Tvy-&gt;y'</span>);
+grid;
+
+<span class="comment">% Nous contastons que la fonction de sensibilite est un passe-haut &agrave; la</span>
+<span class="comment">% pulsation 108 rad/s donc les perturbations pour la plupart importantes en</span>
+<span class="comment">% basses frequences sont fortement diminuees. Notons egalement que le gain</span>
+<span class="comment">% en hautes frequences de cette fonction est nulle, donc il n'amplifie pas</span>
+<span class="comment">% les pertubations.</span>
+
+figure(5)
+
+bode(Tc);
+title(<span class="string">'Bode fonction de sensibilit&eacute; compl&eacute;mentaire Tvu-&gt;u'</span>);
+grid;
+
+<span class="comment">% Nous contastons que la fonction de sensibilite complementaire est un</span>
+<span class="comment">% passe-bas &agrave; la  pulsation 84.3 rad/s donc les bruits de mesures present</span>
+<span class="comment">% en hautes fr&eacute;quences sont facilement compenses. Notons egalement que le</span>
+<span class="comment">% gain en basses frequences de cette fonction est nulle, donc il n'agit pas</span>
+<span class="comment">% sur les composantes presents en basses frequences.</span>
+
+figure(6)
+
+bode(GSc);
+title(<span class="string">'Bode Tvu-&gt;y'</span>);
+grid;
+
+<span class="comment">% Represente "techniquement" un passe haut, mais son gain finale de valeur</span>
+<span class="comment">% -10dB fait qu'il divise par un facteur 5 les composantes de hautes</span>
+<span class="comment">% frequences.</span>
+
+figure(7)
+
+bode(RSc);
+title(<span class="string">'Bode Tvu-&gt;u'</span>);
+grid;
+
+<span class="comment">% Represente "techniquement" un passe bande laissant passer les frequences</span>
+<span class="comment">% comprises entre 66.4 rd/s et 152 rd/s   mais son gain final de valeur</span>
+<span class="comment">% -10dB fait qu'il divise par un facteur 5  les composantes de hautes frequences.</span>
+
+<span class="comment">% Conclusion:</span>
+<span class="comment">% GSRc et RSc, forme un passe bande de bande passante tres etroite</span>
+<span class="comment">% BP=152-66.4 = 85.6 rd/s ce qui permet de reduire les imperfections</span>
+<span class="comment">% d'entree-sorties.</span>
+</pre><img vspace="5" hspace="5" src="modelisation_MCC_03.png" alt=""> <img vspace="5" hspace="5" src="modelisation_MCC_04.png" alt=""> <img vspace="5" hspace="5" src="modelisation_MCC_05.png" alt=""> <img vspace="5" hspace="5" src="modelisation_MCC_06.png" alt=""> <img vspace="5" hspace="5" src="modelisation_MCC_07.png" alt=""> <h2>SIMULATION DU SYSTEME SUR SIMULINK :<a name="19"></a></h2><h2>reponse du systeme en BF a un echelon amorti par un second ordre:<a name="20"></a></h2><pre class="codeinput"><span class="comment">% Nous avons envoye comme consigne la reponse d'un systeme du second ordre</span>
+<span class="comment">% a un echelon pour etre le plus proche des conditions reelles car la</span>
+<span class="comment">% consigne n'est pas brutale (echelon) dans les conditions reelles.</span>
+
+ sim(<span class="string">'simulation_system.slx'</span>)
+
+<span class="comment">% Nous voyons bien comme prevu la reponse indicielle d'un systeme du second</span>
+<span class="comment">% ordre qui suit bien notre consigne et rejette les perturbations du type</span>
+<span class="comment">% echelon assez rapidement (en moins de 6 periodes d'echantillonage).</span>
+</pre><img vspace="5" hspace="5" src="modelisation_MCC_08.png" alt=""> <p class="footer"><br><a href="http://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2015a</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Modelisation du Moteur de propulsion equivalent a un moteur courant continu (MCC)%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+clear all;
+close all;
+
+
+%% Estimation du syst?me :
+
+% Le MCC etant assimilable ? un systeme du premier ordre nous pouvons dire
+% que le systeme en continu peut s'ecrire comme suit :
+
+        %%%%%%%%%%%%%%%%%%%%%%%
+        %             k       %
+        % G(p) = REPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASH %
+        %       1 + Tau * p   %
+        %%%%%%%%%%%%%%%%%%%%%%%
+        
+% Nous avons de ce fait effectue un calcul des parametres
+% experimentalement.
+
+%% determination de la gamme en tension de pilotage du MCC
+
+% Ps: les testes ont ete faits sur chacune des roues. Nous avons presente
+% que ceux d'un des roues. On precise que les resultats ne sont pas
+% identiques sur chaque roue.
+
+% La demarche est simple, il suffit de mesurer d'abord la tension nominale
+% qui est la tension minimale a partir de laquelle les roues commencent ?
+% tourner a vide. Nous avons mesur? 0.15 V pour les tension positives et 0.33V
+% pour les tensions negatives. de ce fait sur cet intervalle en tension 
+% [-0.33V 0.15V] le moteur ne tourne pas meme s'il l'administrateur envoie une 
+% consigne.
+
+% Nous avons ensuite envoye des consignes en tension continue allant de 1V
+% a 5V et a l'aide d'un tachym?tre, nous avons visualise la caracteristique
+% du systeme qui est la m?me pour les tensions negatives. Nous avons la courbe suivante:
+
+Te=0.03;
+
+Tension = [0.01,0.03,0.05,0.07,0.09,0.1,0.14,1,2,3,4,5];
+vitesse = [0,0,0,0,0,0,0,240,665,1140,1622,2060];
+figure(1)
+plot(Tension,vitesse)
+title('caracteristique du MCC')
+xlabel('tension en V')
+ylabel('vitesse en tour/min')
+
+% Nous avons vu que le systeme est lineaire sur sa zone de
+% fonctionnement. Nous avons donc choisi comme gamme de pilotage du moteur
+% la gamme suivante :[1V 6V] pour eviter que le systeme focntionnement en saturation.
+
+% Le courant nominal a ete mesur? a : 3,3V. Il ne faudra pas depasser cette
+% tension si on veut eviter un surchauffement du moteur.
+
+%% Calcul des parametres du systeme 
+    %% Gain statique 
+% Nous somme partis de la courbe caracterisque du systeme en calculant le
+% coefficient de proportionnalite entre la vitesse et le courant. Ce
+% coefficient correspond au gain statique K du systeme mécanique,il vaut
+% Km=478. Mais étant donnée que notre retour est en courant nous avons jugé
+% plus intéressant de travailler sur le retour électrique au lieu du retour
+% mécanique qui est donnée ci-dessous.
+
+K = 1.6996;
+
+    %% Constante de temps 
+ 
+% la constante de temps est trouve a l'aide du nucleo en envoyant une 
+% consigne en echelon et en faisant une acquisition en courant a travers
+% l'uart du nucleo. Après, les mesures relevees ont permis le traçé d'une
+% courbe qui a permis de trouver la constante mécanique( le système est
+% équivalent à un premier ordre avec un gain électrique et une constante de
+% tamps mécanique puisque la constante de temps electrique est
+% négligeable) et le gain électrique.
+
+tau = 0.095;
+
+%% Modele du systeme:
+    %% Continu:
+        %% fonction de transfert en Continu:
+   
+Bcon = K;
+Acon = [tau 1];
+Gcon = tf(Bcon,Acon)
+
+% Stabilite du systeme:
+
+figure(2)
+ pzmap(Gcon);
+
+% le systeme est clairement stable car il presente un seul pole -10.63 qui 
+% est dans le domaine de stabilite.
+
+        %% fonction de transfert en Discret:
+        
+Gd=c2d(Gcon,Te);
+
+Gd.variable='z^-1'
+
+Bd=Gd.num{:};
+
+Ad=Gd.den{:};
+
+%%  Mise en place du régulateur
+
+        %% Modelisation de pertubation
+        
+E=Bd;
+C=1;
+D=[1,-1];
+
+ksi=1.3
+wo=5
+
+% Pc=tf(1,[1,2*ksi*wo,wo*wo]);
+% Pd=c2d(Pc,Te);
+% D2=Pd.den{:};
+
+
+
+        %% Initialisation R,S,T
+ret=1;        
+Dc=1;
+Dr=D;
+P=conv([1,-roots(Ad)/12],[1,-roots(Ad)/12]); 
+
+% Le choix de ces pôles influencent sur les marges de stabilité du système.
+% En effet, plus les pôles sont rapides plus nos marges de gain et de phase
+% sont réduites. Notons toutefois que ce choix des pôles doit être tel
+% qu'ils restent inférieur au pôle du système( pôle de Ad ).
+
+
+Rd1=conv(Ad,Dr);
+
+[S,R]=BEZOU_Z(Rd1,Bd(2),ret,P);
+
+% Polynomes R,S,T
+
+Rd=conv(S,Dr) ;
+Rn=(conv(R,Dc))';
+T=(1/sum(Bd))*P ;
+
+FTRz=tf(Rd,Rn,Te,'Variable','z^-1');
+
+% Fonction de transfert perturbation
+
+Gp=tf(conv(E,Rn),T,Te,'variable','z^-1')
+
+Kp= 1/dcgain(Gp);
+
+        
+           %% Filtre d'adoucissement
+
+% Ce filtre a pour but de ramener la pente infinie de l'echelon en consigne
+% a une pente de valeur finie. Il a donc pour role d'adoucir la consigne
+% quand cette derniere est trop brutale.
+
+% Implementation du Filtre
+        
+ksi=1.3
+wo=10
+        
+Fc=tf(1,[1,2*ksi*wo,wo*wo]);
+Fd=c2d(Fc,Te);
+Kf=1/dcgain(Fd);
+
+%% Fonctions de sensibilite
+
+        %% Definition des Fonctions de transfert
+    
+Sz= tf(conv(Ad,Rd),P,Te,'Variable','z^-1'); % Fonction de sensibilite discrete
+Sc=d2c(Sz)  ;   % Fonction de sensibilité continue
+
+Tz=tf(conv(Bd,Rn),P,Te,'Variable','z^-1');  % Fonction de sensibilite complémentaire discrete
+Tc=d2c(Tz);  % Fonction de sensibilite complementaire continue
+
+GSz=tf(conv(Bd(2),Rd),P,Te,'Variable','z^-1'); % FT entre perturbations d'entree et sortie du systeme
+GSc=d2c(GSz); % FT entre perturbations d'entree et sortie du systeme en continue  
+
+RSz=minreal(FTRz*Sz); % FT entre perturbations de sortie et l'entree du systeme
+RSc=d2c(RSz)   % FT entre perturbations de sortie et l'entree du systeme en continue
+
+
+
+%% Etude du comportement du systeme
+
+        %% Stabilite
+        
+% Fonction de tranfert en boucle ouverte
+
+Gboc = minreal((1-Sc)/Sc);
+
+
+ figure(3);
+ nichols(Gboc);
+ grid;
+ legend('Diagramme de nichols de la BO');
+
+% Du diagramme de nichols on peut deduire les differentes marges de
+% stabilite: 
+% Marge de Gain = 4.52 dB C [4,6] dB , Marge de Phase = 50.7 degres C [30,60] deg , 
+% Marge de Retard = 2.39*10^(-3) s.
+%
+% Pour la marge de module nous regardons le gain minimal avant la fréquence
+% de coupure de la fonction de transfert 1 + Gboc ce qui nous donne une
+% marge de module de -3.85 dB. Cette valur n'appartient pas à la plage
+% recommandee [-8,-6] dB , mais differentes manipulations des poles du polynôme P 
+% nous ont montre que pour atteindre cette plage, nous risquons de sortir
+% des plages de gain et de phase recommandees alors nous avons garde une
+% configuration qui satisfait le maximum de recommendations.
+
+
+figure(4);
+
+bode(Sc);
+title('Bode fonction de sensibilité Tvy->y');
+grid;
+
+% Nous contastons que la fonction de sensibilite est un passe-haut à la 
+% pulsation 108 rad/s donc les perturbations pour la plupart importantes en
+% basses frequences sont fortement diminuees. Notons egalement que le gain
+% en hautes frequences de cette fonction est nulle, donc il n'amplifie pas
+% les pertubations.
+
+figure(5)
+
+bode(Tc);
+title('Bode fonction de sensibilité complémentaire Tvu->u');
+grid;
+
+% Nous contastons que la fonction de sensibilite complementaire est un 
+% passe-bas à la  pulsation 84.3 rad/s donc les bruits de mesures present 
+% en hautes fréquences sont facilement compenses. Notons egalement que le 
+% gain en basses frequences de cette fonction est nulle, donc il n'agit pas 
+% sur les composantes presents en basses frequences.
+
+figure(6)
+
+bode(GSc);
+title('Bode Tvu->y');
+grid;
+
+% Represente "techniquement" un passe haut, mais son gain finale de valeur
+% -10dB fait qu'il divise par un facteur 5 les composantes de hautes
+% frequences.
+
+figure(7)
+
+bode(RSc);
+title('Bode Tvu->u');
+grid;
+
+% Represente "techniquement" un passe bande laissant passer les frequences 
+% comprises entre 66.4 rd/s et 152 rd/s   mais son gain final de valeur 
+% -10dB fait qu'il divise par un facteur 5  les composantes de hautes frequences.
+
+% Conclusion: 
+% GSRc et RSc, forme un passe bande de bande passante tres etroite
+% BP=152-66.4 = 85.6 rd/s ce qui permet de reduire les imperfections
+% d'entree-sorties.
+
+%% SIMULATION DU SYSTEME SUR SIMULINK :
+    %% reponse du systeme en BF a un echelon amorti par un second ordre:
+     
+% Nous avons envoye comme consigne la reponse d'un systeme du second ordre
+% a un echelon pour etre le plus proche des conditions reelles car la
+% consigne n'est pas brutale (echelon) dans les conditions reelles.
+
+ sim('simulation_system.slx')
+
+% Nous voyons bien comme prevu la reponse indicielle d'un systeme du second 
+% ordre qui suit bien notre consigne et rejette les perturbations du type 
+% echelon assez rapidement (en moins de 6 periodes d'echantillonage).
+
+
+
+##### SOURCE END #####
+--></body></html>
